@@ -6,6 +6,25 @@ const iurl =
     "https://api.unsplash.com/photos/?client_id=3tR5SkKPk0AuZJdjOpflbK9mFgeFGT_C5UddKNq_K9I";
 
 $(document).ready(function () {
+    $.ajax({
+        async:false, //非同步:取消，等所有圖都抓到渲染好才開始執行swiper套件
+        url: iurl,
+        type: "GET",
+        success: function (response) {
+            let data = response;
+            // console.log(data);
+            
+            for (let i = 0; i < data.length; i++) {
+                let url = data[i].urls.regular;
+                $('.swiper-wrapper').append(`<div class='swiper-slide'><img class='swiper-img' src="${url}"></div>`);
+                // $('.swiper-wrapper').append(`<div><img class='swiper-img' src="${url}"></div>`);
+            }
+            
+        },
+        error: function (response) {
+            console.log("取得失敗");
+        },
+    });
     const swiper = new Swiper(".swiper", {
         direction: "horizontal",
         loop: true,
@@ -20,7 +39,7 @@ $(document).ready(function () {
         autoplay: {
             delay: 1500,
         },
-        observer:true, //注意!!!!!!當改變swiper的樣式（隱藏/顯示）或者修改swiper的子元素時，自動初始化swiper。很重要，沒加的話無法自動撥放
+        // observer:true, //注意!!!!!!當改變swiper的樣式（隱藏/顯示）或者修改swiper的子元素時，自動初始化swiper。很重要，沒加的話無法自動撥放
     });
     $(function () {
         $(document).scroll(function () {
@@ -49,24 +68,7 @@ $(document).ready(function () {
             console.log("資料取得失敗 回去檢討檢討");
         },//失敗事件,
     });
-    $.ajax({
-        url: iurl,
-        type: "GET",
-        success: function (response) {
-            let data = response;
-            // console.log(data);
-            
-            for (let i = 0; i < data.length; i++) {
-                let url = data[i].urls.regular;
-                $('.swiper-wrapper').append(`<div class='swiper-slide'><img class='swiper-img' src="${url}"></div>`);
-                // $('.swiper-wrapper').append(`<div><img class='swiper-img' src="${url}"></div>`);
-            }
-            
-        },
-        error: function (response) {
-            console.log("取得失敗");
-        },
-    });
+    
     
 });
 
