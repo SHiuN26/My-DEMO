@@ -29,7 +29,6 @@ $(document).ready(function () {
         direction: "horizontal",
         loop: true,
         speed: 1000,
-        effect:'slide',
         pagination: {
             el: ".swiper-pagination",
         },
